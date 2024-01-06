@@ -63,7 +63,7 @@ function register_work_post_type()
 		'rest_base' => 'work',
 		'menu_position' => 5,
 		'menu_icon' => 'dashicons-id-alt',
-		'supports' => array('title', 'thumbnail', 'excerpt', 'editor'),
+		'supports' => array('title', 'thumbnail', 'excerpt', 'editor', 'page-attributes'),
 	];
 
 	register_post_type('work', $args);
@@ -105,3 +105,76 @@ function register_custom_category()
 	register_taxonomy('work_category', ['work'], $args);
 }
 add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
+
+/**
+ * Add custom meta box for 'work' custom post type.
+ *
+ * Adds a custom meta box named 'Work Details' to the 'work' custom post type.
+ * The meta box allows users to enter additional details for each work entry, including website URL, tech stack, platform, github url, domain.
+ */
+function add_work_metabox($meta_boxes)
+{
+	$meta_boxes[] = array(
+		'id' => 'work_details',
+		'title' => 'Work Details',
+		'post_types' => array('work'),
+		'fields' => array(
+			array(
+				'name' => 'Website Url',
+				'id' => 'website_url',
+				'type' => 'url',
+			),
+			array(
+				'name' => 'Tech Stack',
+				'id' => 'tech_stack',
+				'type' => 'checkbox_list',
+				'inline' => true,
+				'select_all_none' => true,
+				'options' => [
+					'javascript' => 'JavaScript',
+					'php' => 'PHP',
+					'wordpress' => 'WordPress',
+					'html5' => 'HTML5',
+					'css3' => 'CSS3',
+					'jquery' => 'jQuery',
+					'scss' => 'SCSS',
+					'react' => 'React.js',
+					'react_native' => 'React Native',
+					'node' => 'Node.js',
+					'puppeteer' => 'Puppeteer',
+					'next' => 'Next.js',
+					'express' => 'Express.js',
+					'redux' => 'Redux.js',
+					'styled_component' => 'Styled Components',
+					'jest' => 'Jest',
+					'jotai' => 'Jotai',
+					'react_testing_library' => 'React Testing Library',
+					'react_native_testing_library' => 'React Native Testing Library',
+				],
+			),
+			array(
+				'name' => 'Platform',
+				'id' => 'platform',
+				'type' => 'checkbox_list',
+				'inline' => true,
+				'select_all_none' => true,
+				'options' => [
+					'web' => 'Web',
+					'mobile' => 'Mobile',
+				],
+			),
+			array(
+				'name' => 'Github Url',
+				'id' => 'github_url',
+				'type' => 'url',
+			),
+			array(
+				'name' => 'Domain',
+				'id' => 'domain',
+				'placeholder' => 'Enter domain of work'
+			),
+		),
+	);
+	return $meta_boxes;
+}
+add_filter('rwmb_meta_boxes', __NAMESPACE__ . '\add_work_metabox');
