@@ -21,84 +21,87 @@
 namespace SG_WORKS;
 
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) exit;
+if (!defined('ABSPATH'))
+	exit;
 
 /**
  * Register a Work custom post type.
  *
  * @since 1.0.0
  */
-function register_work_post_type() {
+function register_work_post_type()
+{
 	$labels = [
-		'name'               => _x( 'Works', 'post type general name', 'sg_works' ),
-		'singular_name'      => _x( 'Work', 'post type singular name', 'sg_works' ),
-		'menu_name'          => _x( 'Works', 'admin menu', 'sg_works' ),
-		'name_admin_bar'     => _x( 'Work', 'add new on admin bar', 'sg_works' ),
-		'add_new'            => _x( 'Add New', 'Work', 'sg_works' ),
-		'add_new_item'       => __( 'Add New Work', 'sg_works' ),
-		'new_item'           => __( 'New Work', 'sg_works' ),
-		'edit_item'          => __( 'Edit Work', 'sg_works' ),
-		'view_item'          => __( 'View Work', 'sg_works' ),
-		'all_items'          => __( 'All Works', 'sg_works' ),
-		'search_items'       => __( 'Search Works', 'sg_works' ),
-		'parent_item_colon'  => __( 'Parent Works:', 'sg_works' ),
-		'not_found'          => __( 'No Works found.', 'sg_works' ),
-		'not_found_in_trash' => __( 'No Works found in Trash.', 'sg_works' ),
+		'name' => _x('Works', 'post type general name', 'sg_works'),
+		'singular_name' => _x('Work', 'post type singular name', 'sg_works'),
+		'menu_name' => _x('Works', 'admin menu', 'sg_works'),
+		'name_admin_bar' => _x('Work', 'add new on admin bar', 'sg_works'),
+		'add_new' => _x('Add New', 'Work', 'sg_works'),
+		'add_new_item' => __('Add New Work', 'sg_works'),
+		'new_item' => __('New Work', 'sg_works'),
+		'edit_item' => __('Edit Work', 'sg_works'),
+		'view_item' => __('View Work', 'sg_works'),
+		'all_items' => __('All Works', 'sg_works'),
+		'search_items' => __('Search Works', 'sg_works'),
+		'parent_item_colon' => __('Parent Works:', 'sg_works'),
+		'not_found' => __('No Works found.', 'sg_works'),
+		'not_found_in_trash' => __('No Works found in Trash.', 'sg_works'),
 	];
 
 	$args = [
-		'labels'             => $labels,
-		'public'             => true,
+		'labels' => $labels,
+		'public' => true,
 		'publicly_queryable' => true,
-		'show_ui'            => true,
-		'show_in_menu'       => true,
-		'query_var'          => true,
-		'capability_type'    => 'post',
-		'has_archive'        => true,
-		'hierarchical'       => false,
-		'rewrite'            => [ 'slug' => 'work' ],
-		'show_in_rest'       => true,
+		'show_ui' => true,
+		'show_in_menu' => true,
+		'query_var' => true,
+		'capability_type' => 'post',
+		'has_archive' => true,
+		'hierarchical' => false,
+		'rewrite' => ['slug' => 'work'],
+		'show_in_rest' => true,
 		'rest_base' => 'work',
-        'menu_position' => 5,
+		'menu_position' => 5,
 		'menu_icon' => 'dashicons-id-alt',
-        'supports' => array('title', 'thumbnail', 'excerpt', 'editor'),
+		'supports' => array('title', 'thumbnail', 'excerpt', 'editor'),
 	];
 
-	register_post_type( 'work', $args );
+	register_post_type('work', $args);
 }
-add_action( 'init', __NAMESPACE__ . '\register_work_post_type' );
+add_action('init', __NAMESPACE__ . '\register_work_post_type');
 
 /**
  * Register custom category for work.
  *
  * @since 1.0.0
  */
-function register_custom_category() {
+function register_custom_category()
+{
 	$labels = [
-		'name'              => _x( 'Work Categories', 'taxonomy general name', 'sg_works' ),
-		'singular_name'     => _x( 'Work Category', 'taxonomy singular name', 'sg_works' ),
-		'search_items'      => __( 'Search Work Categories', 'sg_works' ),
-		'all_items'         => __( 'All Work Categories', 'sg_works' ),
-		'parent_item'       => __( 'Parent Work Category', 'sg_works' ),
-		'parent_item_colon' => __( 'Parent Work Category:', 'sg_works' ),
-		'edit_item'         => __( 'Edit Work Category', 'sg_works' ),
-		'update_item'       => __( 'Update Work Category', 'sg_works' ),
-		'add_new_item'      => __( 'Add New Work Category', 'sg_works' ),
-		'new_item_name'     => __( 'New Work Category Name', 'sg_works' ),
-		'menu_name'         => __( 'Work Category', 'sg_works' ),
+		'name' => _x('Work Categories', 'taxonomy general name', 'sg_works'),
+		'singular_name' => _x('Work Category', 'taxonomy singular name', 'sg_works'),
+		'search_items' => __('Search Work Categories', 'sg_works'),
+		'all_items' => __('All Work Categories', 'sg_works'),
+		'parent_item' => __('Parent Work Category', 'sg_works'),
+		'parent_item_colon' => __('Parent Work Category:', 'sg_works'),
+		'edit_item' => __('Edit Work Category', 'sg_works'),
+		'update_item' => __('Update Work Category', 'sg_works'),
+		'add_new_item' => __('Add New Work Category', 'sg_works'),
+		'new_item_name' => __('New Work Category Name', 'sg_works'),
+		'menu_name' => __('Work Category', 'sg_works'),
 	];
 
 	$args = [
-		'hierarchical'      => false,
-		'labels'            => $labels,
-		'show_ui'           => true,
+		'hierarchical' => false,
+		'labels' => $labels,
+		'show_ui' => true,
 		'show_admin_column' => true,
-		'query_var'         => true,
-		'rewrite'           => [ 'slug' => 'work-category' ],
-		'show_in_rest'      => true,
-        'rest_base'         => 'work-category'
+		'query_var' => true,
+		'rewrite' => ['slug' => 'work-category'],
+		'show_in_rest' => true,
+		'rest_base' => 'work-category'
 	];
 
-	register_taxonomy( 'work_category', [ 'work' ], $args );
+	register_taxonomy('work_category', ['work'], $args);
 }
-add_action( 'init', __NAMESPACE__ . '\register_custom_category', 0 );
+add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
