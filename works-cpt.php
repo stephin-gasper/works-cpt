@@ -140,6 +140,7 @@ function add_work_metabox($meta_boxes)
 					'scss' => 'SCSS',
 					'react' => 'React.js',
 					'react_native' => 'React Native',
+					'deno' => 'Deno',
 					'node' => 'Node.js',
 					'puppeteer' => 'Puppeteer',
 					'next' => 'Next.js',
