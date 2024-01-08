@@ -173,6 +173,11 @@ function add_work_metabox($meta_boxes)
 				'id' => 'domain',
 				'placeholder' => 'Enter domain of work'
 			),
+			array(
+				'name' => 'Featured Image Url',
+				'id' => 'featured_image_url',
+				'type' => 'url',
+			),
 		),
 	);
 	return $meta_boxes;
