@@ -161,6 +161,7 @@ function add_work_metabox($meta_boxes)
 				'options' => [
 					'web' => 'Web',
 					'mobile' => 'Mobile',
+					'backend' => 'Backend',
 				],
 			),
 			array(
