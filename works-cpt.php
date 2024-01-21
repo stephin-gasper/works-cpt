@@ -8,7 +8,7 @@
  * @version       1.0.0
  *
  * @wordpress-plugin
- * Plugin Name:   Works CPT
+ * Plugin Name:   Works Custom Post Type
  * Description:   A CPT for showing projects and contributions made by developer
  * Version:       1.0.0
  * Author:        Stephin Gasper
@@ -110,7 +110,9 @@ add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
  * Add custom meta box for 'work' custom post type.
  *
  * Adds a custom meta box named 'Work Details' to the 'work' custom post type.
- * The meta box allows users to enter additional details for each work entry, including website URL, tech stack, platform, github url, domain.
+ * The meta box allows users to enter additional details for each work entry, including website URL, tech stack, platform, github url, domain, featured image url( useful when hosting images separately).
+ * 
+ * @since 1.0.0
  */
 function add_work_metabox($meta_boxes)
 {
