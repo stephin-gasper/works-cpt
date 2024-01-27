@@ -110,12 +110,34 @@ add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
  * Add custom meta box for 'work' custom post type.
  *
  * Adds a custom meta box named 'Work Details' to the 'work' custom post type.
- * The meta box allows users to enter additional details for each work entry, including website URL, tech stack, platform, github url, domain, featured image url( useful when hosting images separately).
+ * The meta box allows users to enter additional details for each work entry, including website URL, tech stack highlights, tech stack, platform, github url, domain, featured image url( useful when hosting images separately).
  * 
  * @since 1.0.0
  */
 function add_work_metabox($meta_boxes)
 {
+	$tech_stack_options = [
+		'javascript' => 'JavaScript',
+		'php' => 'PHP',
+		'wordpress' => 'WordPress',
+		'html5' => 'HTML5',
+		'css3' => 'CSS3',
+		'jquery' => 'jQuery',
+		'scss' => 'SCSS',
+		'react' => 'ReactJS',
+		'react_native' => 'React Native',
+		'deno' => 'Deno',
+		'node' => 'node.js',
+		'puppeteer' => 'Puppeteer',
+		'next' => 'NextJS',
+		'express' => 'express.js',
+		'redux' => 'ReduxJS',
+		'styled_component' => 'Styled Components',
+		'jest' => 'Jest',
+		'jotai' => 'Jotai',
+		'react_testing_library' => 'React Testing Library',
+		'react_native_testing_library' => 'React Native Testing Library',
+	];
 	$meta_boxes[] = array(
 		'id' => 'work_details',
 		'title' => 'Work Details',
@@ -127,33 +149,20 @@ function add_work_metabox($meta_boxes)
 				'type' => 'url',
 			),
 			array(
+				'name' => 'Tech Stack Highlighted',
+				'id' => 'tech_stack_highlighted',
+				'type' => 'checkbox_list',
+				'inline' => true,
+				'select_all_none' => true,
+				'options' => $tech_stack_options,
+			),
+			array(
 				'name' => 'Tech Stack',
 				'id' => 'tech_stack',
 				'type' => 'checkbox_list',
 				'inline' => true,
 				'select_all_none' => true,
-				'options' => [
-					'javascript' => 'JavaScript',
-					'php' => 'PHP',
-					'wordpress' => 'WordPress',
-					'html5' => 'HTML5',
-					'css3' => 'CSS3',
-					'jquery' => 'jQuery',
-					'scss' => 'SCSS',
-					'react' => 'React.js',
-					'react_native' => 'React Native',
-					'deno' => 'Deno',
-					'node' => 'Node.js',
-					'puppeteer' => 'Puppeteer',
-					'next' => 'Next.js',
-					'express' => 'Express.js',
-					'redux' => 'Redux.js',
-					'styled_component' => 'Styled Components',
-					'jest' => 'Jest',
-					'jotai' => 'Jotai',
-					'react_testing_library' => 'React Testing Library',
-					'react_native_testing_library' => 'React Native Testing Library',
-				],
+				'options' => $tech_stack_options,
 			),
 			array(
 				'name' => 'Platform',

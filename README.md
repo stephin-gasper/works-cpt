@@ -57,6 +57,7 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
   - **Excerpt:** *(Textarea)* A brief description of the work.
   - **Page Attribute:** *(Text)* Set order in which the work will be displayed.
   - **Website URL:** *(URL)* The URL of the project.
+  - **Tech Stack Highlights:** *(Checkboxes)* The highlighted tech stack utilized in the project. *(Multiple selections allowed)*
   - **Tech Stack:** *(Checkboxes)* The tech stack utilized in the project. *(Multiple selections allowed)*
   - **Platform:** *(Checkboxes)* The platforms which the project is built for. *(Multiple selections allowed)*
   - **Github URL:** *(URL)* The URL of the Github project if it is open source.
@@ -65,7 +66,7 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
 
 ## Screenshot
 
-![Edit page](https://i.postimg.cc/jdRkV6Kf/works-cpt.png)
+![Edit page](https://i.postimg.cc/tghjjDZJ/works-cpt.png)
 
 ## Contributors
 
