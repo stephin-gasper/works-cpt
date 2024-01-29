@@ -62,11 +62,11 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
   - **Platform:** *(Checkboxes)* The platforms which the project is built for. *(Multiple selections allowed)*
   - **Github URL:** *(URL)* The URL of the Github project if it is open source.
   - **Domain:** *(Text)* The domain of the work.
-  - **Featured Image Url:** *(URL)* The featured image url of the work hosted on different server.
+  - **Featured Image Url:** *(URL)* The featured image url of the work hosted on different server, supports multiple entries to display list of images
 
 ## Screenshot
 
-![Edit page](https://i.postimg.cc/tghjjDZJ/works-cpt.png)
+![Edit page](https://i.ibb.co/gTfdf8w/works-cpt.png)
 
 ## Contributors
 
