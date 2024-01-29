@@ -190,7 +190,8 @@ function add_work_metabox($meta_boxes)
 				'name' => 'Featured Image Url',
 				'id' => 'featured_image_url',
 				'type' => 'url',
-			),
+				'clone' => true,
+			)
 		),
 	);
 	return $meta_boxes;
