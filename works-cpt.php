@@ -75,7 +75,7 @@ add_action('init', __NAMESPACE__ . '\register_work_post_type');
  *
  * @since 1.0.0
  */
-function register_custom_category()
+function register_work_custom_category()
 {
 	$labels = [
 		'name' => _x('Work Categories', 'taxonomy general name', 'sg_works'),
@@ -104,7 +104,43 @@ function register_custom_category()
 
 	register_taxonomy('work_category', ['work'], $args);
 }
-add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
+add_action('init', __NAMESPACE__ . '\register_work_custom_category', 0);
+
+/**
+ * Register custom category for tech stack.
+ *
+ * @since 1.0.0
+ */
+function register_tech_stack_custom_category()
+{
+	$labels = [
+		'name' => _x('Tech Stacks', 'taxonomy general name', 'sg_works'),
+		'singular_name' => _x('Tech Stack', 'taxonomy singular name', 'sg_works'),
+		'search_items' => __('Search Tech Stacks', 'sg_works'),
+		'all_items' => __('All Tech Stacks', 'sg_works'),
+		'parent_item' => __('Parent Tech Stack', 'sg_works'),
+		'parent_item_colon' => __('Parent Tech Stack:', 'sg_works'),
+		'edit_item' => __('Edit Tech Stack', 'sg_works'),
+		'update_item' => __('Update Tech Stack', 'sg_works'),
+		'add_new_item' => __('Add New Tech Stack', 'sg_works'),
+		'new_item_name' => __('New Tech Stack Name', 'sg_works'),
+		'menu_name' => __('Tech Stack', 'sg_works'),
+	];
+
+	$args = [
+		'hierarchical' => false,
+		'labels' => $labels,
+		'show_ui' => true,
+		'show_admin_column' => true,
+		'query_var' => true,
+		'rewrite' => ['slug' => 'tech-stack'],
+		'show_in_rest' => false,
+		'rest_base' => 'tech-stack'
+	];
+
+	register_taxonomy('tech_stack', ['work'], $args);
+}
+add_action('init', __NAMESPACE__ . '\register_tech_stack_custom_category', 0);
 
 /**
  * Add custom meta box for 'work' custom post type.
@@ -116,28 +152,22 @@ add_action('init', __NAMESPACE__ . '\register_custom_category', 0);
  */
 function add_work_metabox($meta_boxes)
 {
-	$tech_stack_options = [
-		'javascript' => 'JavaScript',
-		'php' => 'PHP',
-		'wordpress' => 'WordPress',
-		'html5' => 'HTML5',
-		'css3' => 'CSS3',
-		'jquery' => 'jQuery',
-		'scss' => 'SCSS',
-		'react' => 'ReactJS',
-		'react_native' => 'React Native',
-		'deno' => 'Deno',
-		'node' => 'node.js',
-		'puppeteer' => 'Puppeteer',
-		'next' => 'NextJS',
-		'express' => 'express.js',
-		'redux' => 'ReduxJS',
-		'styled_component' => 'Styled Components',
-		'jest' => 'Jest',
-		'jotai' => 'Jotai',
-		'react_testing_library' => 'React Testing Library',
-		'react_native_testing_library' => 'React Native Testing Library',
-	];
+	$tech_stack_terms = get_terms(
+		array(
+			'taxonomy' => 'tech_stack',
+			'parent' => 0,
+			'hide_empty' => false,
+		)
+	);
+
+	$tech_stack_options = array();
+
+	if (!empty($tech_stack_terms)) {
+		foreach ($tech_stack_terms as $category) {
+			$tech_stack_options[$category->name] = $category->name;
+		}
+	}
+
 	$meta_boxes[] = array(
 		'id' => 'work_details',
 		'title' => 'Work Details',
@@ -158,11 +188,12 @@ function add_work_metabox($meta_boxes)
 			),
 			array(
 				'name' => 'Tech Stack',
-				'id' => 'tech_stack',
-				'type' => 'checkbox_list',
+				'id' => 'taxonomy_tech_stack',
+				'type' => 'taxonomy',
+				'taxonomy' => 'tech_stack',
 				'inline' => true,
 				'select_all_none' => true,
-				'options' => $tech_stack_options,
+				'field_type' => 'checkbox_list',
 			),
 			array(
 				'name' => 'Platform',

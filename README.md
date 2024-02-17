@@ -57,12 +57,14 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
   - **Excerpt:** *(Textarea)* A brief description of the work.
   - **Page Attribute:** *(Text)* Set order in which the work will be displayed.
   - **Website URL:** *(URL)* The URL of the project.
-  - **Tech Stack Highlights:** *(Checkboxes)* The highlighted tech stack utilized in the project. *(Multiple selections allowed)*
-  - **Tech Stack:** *(Checkboxes)* The tech stack utilized in the project. *(Multiple selections allowed)*
+  - **Tech Stack Highlights:** *(Checkboxes)* The highlighted tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
+  - **Tech Stack:** *(Checkboxes)* The tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
   - **Platform:** *(Checkboxes)* The platforms which the project is built for. *(Multiple selections allowed)*
   - **Github URL:** *(URL)* The URL of the Github project if it is open source.
   - **Domain:** *(Text)* The domain of the work.
   - **Featured Image Url:** *(URL)* The featured image url of the work hosted on different server, supports multiple entries to display list of images
+- Add tech stacks under **Works -> Tech Stacks**
+- Add categories for work under **Works -> Work Categories**
 
 ## Screenshot
 
