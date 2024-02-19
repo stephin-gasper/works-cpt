@@ -69,6 +69,7 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
 ## Screenshot
 
 ![Edit page](https://i.ibb.co/gTfdf8w/works-cpt.png)
+![Tech Stack page](https://i.ibb.co/b7rzHFX/works-cpt-tech-stack.png)
 
 ## Contributors
 
