@@ -165,8 +165,9 @@ function add_content_for_taxonomy_tech_stack(string $content, string $column_nam
     if (!$image_url) {
         return;
     }
-
-    echo esc_attr($image_url);
+    ?>
+    <img src="<?php echo esc_attr($image_url); ?>" width="30" height="30" title="<?php echo esc_attr($image_url); ?>" />
+    <?php
 }
 
 add_action('manage_tech_stack_custom_column', __NAMESPACE__ . '\add_content_for_taxonomy_tech_stack', 10, 3);
