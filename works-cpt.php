@@ -5,12 +5,12 @@
  * @package       SG_WORKS
  * @license       mit
  * @author        Stephin Gasper
- * @version       1.0.0
+ * @version       1.0.2
  *
  * @wordpress-plugin
  * Plugin Name:   Works Custom Post Type
  * Description:   A CPT for showing projects and contributions made by developer
- * Version:       1.0.0
+ * Version:       1.0.2
  * Author:        Stephin Gasper
  * Author URI:    https://stephin-gasper.vercel.app/
  * Text Domain:   sg_works
@@ -107,40 +107,9 @@ function register_work_custom_category()
 add_action('init', __NAMESPACE__ . '\register_work_custom_category', 0);
 
 /**
- * Register custom category for tech stack.
- *
- * @since 1.0.0
+ * Include the 'tech stack' taxonomy file to register custom taxonomy & its meta fields.
  */
-function register_tech_stack_custom_category()
-{
-	$labels = [
-		'name' => _x('Tech Stacks', 'taxonomy general name', 'sg_works'),
-		'singular_name' => _x('Tech Stack', 'taxonomy singular name', 'sg_works'),
-		'search_items' => __('Search Tech Stacks', 'sg_works'),
-		'all_items' => __('All Tech Stacks', 'sg_works'),
-		'parent_item' => __('Parent Tech Stack', 'sg_works'),
-		'parent_item_colon' => __('Parent Tech Stack:', 'sg_works'),
-		'edit_item' => __('Edit Tech Stack', 'sg_works'),
-		'update_item' => __('Update Tech Stack', 'sg_works'),
-		'add_new_item' => __('Add New Tech Stack', 'sg_works'),
-		'new_item_name' => __('New Tech Stack Name', 'sg_works'),
-		'menu_name' => __('Tech Stack', 'sg_works'),
-	];
-
-	$args = [
-		'hierarchical' => false,
-		'labels' => $labels,
-		'show_ui' => true,
-		'show_admin_column' => true,
-		'query_var' => true,
-		'rewrite' => ['slug' => 'tech-stack'],
-		'show_in_rest' => false,
-		'rest_base' => 'tech-stack'
-	];
-
-	register_taxonomy('tech_stack', ['work'], $args);
-}
-add_action('init', __NAMESPACE__ . '\register_tech_stack_custom_category', 0);
+require_once dirname(__FILE__) . '/includes/tech-stack-taxonomy.php';
 
 /**
  * Add custom meta box for 'work' custom post type.
