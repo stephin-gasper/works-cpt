@@ -41,7 +41,7 @@ add_action('init', __NAMESPACE__ . '\register_tech_stack_custom_category', 0);
 /**
  * Register additional fields to tech stack taxonomy rest api response.
  * 
- * - Adds 'image_url' to response
+ * - Adds 'image_url' to response of 'meta' property
  *
  * @since 1.0.2
  */
@@ -50,6 +50,23 @@ function register_taxonomy_tech_stack_meta()
     register_term_meta('tech_stack', 'image_url', array('type' => 'string', 'single' => true, 'show_in_rest' => true));
 }
 add_action('init', __NAMESPACE__ . '\register_taxonomy_tech_stack_meta');
+
+/**
+ * Add tech stack taxonomy meta as separate entry in rest api response.
+ * 
+ * - Adds 'image_url' to response
+ *
+ * @since 1.0.2
+ */
+function add_taxonomy_tech_stack_meta_in_rest($response, $item, $request)
+{
+    $image_url = get_term_meta($item->term_id, 'image_url', true);
+
+    $response->data['image_url'] = $image_url ?: '';
+    return $response;
+}
+
+add_filter('rest_prepare_tech_stack', __NAMESPACE__ . '\add_taxonomy_tech_stack_meta_in_rest', 10, 3);
 
 /**
  * Add additional fields when adding new tech stack.
