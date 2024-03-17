@@ -4,9 +4,9 @@
 
 ## Description
 
-This WordPress plugin registers a custom post type called Works for showing projects and contributions made by developer, making it easy to create an impressive portfolio website. It also registers separate custom taxonomy for categories called work category.
+This WordPress plugin registers a custom post type called Works for showing projects and contributions made by developer, making it easy to create an impressive portfolio website. It also registers separate custom taxonomies called work category, tech stack & organization.
 
-This plugin doesn't change how work items are displayed in your theme. You will need to add templates for archive-work.php and single-work.php if you want to customize the display of work items.
+This plugin doesn't change how work items are displayed in your theme. You will need to add templates for archive-work.php and single-work.php, if you want to customize the display of work items.
 
 ## Plugin Information
 
@@ -43,7 +43,7 @@ Check out the Codex for more information about [installing plugins manually](htt
 
 ## Dependency
 
-This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/meta-box/) which is used to display additional information for your work like website URL, tech stack, platform, github url, domain, featured image url( optional field, useful when hosting images separately)
+This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/meta-box/) which is used to display additional information for your work like website URL, tech stack highlights, tech stack, platform, organization, github url, domain, featured image url( optional field, useful when hosting images separately)
 
 ## Usage
 
@@ -60,6 +60,7 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
   - **Tech Stack Highlights:** *(Checkboxes)* The highlighted tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
   - **Tech Stack:** *(Checkboxes)* The tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
   - **Platform:** *(Checkboxes)* The platforms which the project is built for. *(Multiple selections allowed)*
+  - **Organization:** *(Checkboxes)* The organization which the project belongs to.
   - **Github URL:** *(URL)* The URL of the Github project if it is open source.
   - **Domain:** *(Text)* The domain of the work.
   - **Featured Image Url:** *(URL)* The featured image url of the work hosted on different server, supports multiple entries to display list of images
@@ -68,7 +69,7 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
 
 ## Screenshot
 
-![Edit page](https://i.ibb.co/gTfdf8w/works-cpt.png)
+![Edit page](https://i.ibb.co/64HttKZ/works-cpt.png)
 ![Tech Stack page](https://i.ibb.co/b7rzHFX/works-cpt-tech-stack.png)
 
 ## Contributors

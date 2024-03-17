@@ -5,7 +5,7 @@
  * @package       SG_WORKS
  * @license       mit
  * @author        Stephin Gasper
- * @version       1.0.2
+ * @version       1.0.3
  *
  * @wordpress-plugin
  * Plugin Name:   Works Custom Post Type
@@ -71,45 +71,19 @@ function register_work_post_type()
 add_action('init', __NAMESPACE__ . '\register_work_post_type');
 
 /**
- * Register custom category for work.
- *
- * @since 1.0.0
+ * Include the 'work category' taxonomy file to register custom taxonomy
  */
-function register_work_custom_category()
-{
-	$labels = [
-		'name' => _x('Work Categories', 'taxonomy general name', 'sg_works'),
-		'singular_name' => _x('Work Category', 'taxonomy singular name', 'sg_works'),
-		'search_items' => __('Search Work Categories', 'sg_works'),
-		'all_items' => __('All Work Categories', 'sg_works'),
-		'parent_item' => __('Parent Work Category', 'sg_works'),
-		'parent_item_colon' => __('Parent Work Category:', 'sg_works'),
-		'edit_item' => __('Edit Work Category', 'sg_works'),
-		'update_item' => __('Update Work Category', 'sg_works'),
-		'add_new_item' => __('Add New Work Category', 'sg_works'),
-		'new_item_name' => __('New Work Category Name', 'sg_works'),
-		'menu_name' => __('Work Category', 'sg_works'),
-	];
-
-	$args = [
-		'hierarchical' => false,
-		'labels' => $labels,
-		'show_ui' => true,
-		'show_admin_column' => true,
-		'query_var' => true,
-		'rewrite' => ['slug' => 'work-category'],
-		'show_in_rest' => true,
-		'rest_base' => 'work-category'
-	];
-
-	register_taxonomy('work_category', ['work'], $args);
-}
-add_action('init', __NAMESPACE__ . '\register_work_custom_category', 0);
+require_once dirname(__FILE__) . '/includes/work-category-taxonomy.php';
 
 /**
  * Include the 'tech stack' taxonomy file to register custom taxonomy & its meta fields.
  */
 require_once dirname(__FILE__) . '/includes/tech-stack-taxonomy.php';
+
+/**
+ * Include the 'organization' taxonomy file to register custom taxonomy
+ */
+require_once dirname(__FILE__) . '/includes/organization-taxonomy.php';
 
 /**
  * Add custom meta box for 'work' custom post type.
@@ -175,6 +149,14 @@ function add_work_metabox($meta_boxes)
 					'mobile' => 'Mobile',
 					'backend' => 'Backend',
 				],
+			),
+			array(
+				'name' => 'Organization',
+				'id' => 'taxonomy_organization',
+				'type' => 'taxonomy',
+				'taxonomy' => 'organization',
+				'inline' => true,
+				'field_type' => 'radio_list',
 			),
 			array(
 				'name' => 'Github Url',
