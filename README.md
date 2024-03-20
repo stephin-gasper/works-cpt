@@ -4,7 +4,7 @@
 
 ## Description
 
-This WordPress plugin registers a custom post type called Works for showing projects and contributions made by developer, making it easy to create an impressive portfolio website. It also registers separate custom taxonomies called work category, tech stack & organization.
+This WordPress plugin registers a custom post type called Works for showing projects and contributions made by developer, making it easy to create an impressive portfolio website. It also registers separate custom taxonomies called work category, tech stack & work organization.
 
 This plugin doesn't change how work items are displayed in your theme. You will need to add templates for archive-work.php and single-work.php, if you want to customize the display of work items.
 
@@ -57,10 +57,12 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
   - **Excerpt:** *(Textarea)* A brief description of the work.
   - **Page Attribute:** *(Text)* Set order in which the work will be displayed.
   - **Website URL:** *(URL)* The URL of the project.
+  - **Website Active:** *(Radiobutton)* Inform if website is active or not.
+  - **Project Status:** *(Text)* The status of project.
   - **Tech Stack Highlights:** *(Checkboxes)* The highlighted tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
   - **Tech Stack:** *(Checkboxes)* The tech stack utilized in the project, fetched from tech stack custom taxonomy. *(Multiple selections allowed)*
   - **Platform:** *(Checkboxes)* The platforms which the project is built for. *(Multiple selections allowed)*
-  - **Organization:** *(Checkboxes)* The organization which the project belongs to.
+  - **Organization:** *(Radiobutton)* The organization which the project belongs to.
   - **Github URL:** *(URL)* The URL of the Github project if it is open source.
   - **Domain:** *(Text)* The domain of the work.
   - **Featured Image Url:** *(URL)* The featured image url of the work hosted on different server, supports multiple entries to display list of images
@@ -69,8 +71,8 @@ This plugin has optional dependency on [MetaBox](https://wordpress.org/plugins/m
 
 ## Screenshot
 
-![Edit page](https://i.ibb.co/64HttKZ/works-cpt.png)
-![Tech Stack page](https://i.ibb.co/b7rzHFX/works-cpt-tech-stack.png)
+![Edit page](https://i.postimg.cc/RZVq161r/works-cpt.avif)
+![Tech Stack page](https://i.ibb.co/q58Yt4k/works-cpt-tech-stack.png)
 
 ## Contributors
 
