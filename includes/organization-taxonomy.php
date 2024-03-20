@@ -29,11 +29,11 @@ function register_organization_custom_category()
         'show_ui' => true,
         'show_admin_column' => true,
         'query_var' => true,
-        'rewrite' => ['slug' => 'organization'],
+        'rewrite' => ['slug' => 'work-organization'],
         'show_in_rest' => true,
-        'rest_base' => 'organization'
+        'rest_base' => 'work-organization'
     ];
 
-    register_taxonomy('organization', ['work'], $args);
+    register_taxonomy('work_organization', ['work'], $args);
 }
 add_action('init', __NAMESPACE__ . '\register_organization_custom_category', 0);

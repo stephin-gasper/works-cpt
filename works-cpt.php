@@ -105,7 +105,7 @@ function add_work_metabox($meta_boxes)
 
 	$tech_stack_options = array();
 
-	if (!empty($tech_stack_terms)) {
+	if (!empty ($tech_stack_terms)) {
 		foreach ($tech_stack_terms as $category) {
 			$tech_stack_options[$category->name] = $category->name;
 		}
@@ -152,9 +152,9 @@ function add_work_metabox($meta_boxes)
 			),
 			array(
 				'name' => 'Organization',
-				'id' => 'taxonomy_organization',
+				'id' => 'taxonomy_work_organization',
 				'type' => 'taxonomy',
-				'taxonomy' => 'organization',
+				'taxonomy' => 'work_organization',
 				'inline' => true,
 				'field_type' => 'radio_list',
 			),
