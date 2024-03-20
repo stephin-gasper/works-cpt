@@ -122,6 +122,20 @@ function add_work_metabox($meta_boxes)
 				'type' => 'url',
 			),
 			array(
+				'name' => 'Website Active',
+				'id' => 'is_website_active',
+				'type' => 'radio',
+				'std' => 'true',
+				'options' => [
+					'true' => 'Yes',
+					'false' => 'No',
+				],
+			),
+			array(
+				'name' => 'Project Status',
+				'id' => 'project_status',
+			),
+			array(
 				'name' => 'Tech Stack Highlighted',
 				'id' => 'tech_stack_highlighted',
 				'type' => 'checkbox_list',
