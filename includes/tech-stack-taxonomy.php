@@ -39,36 +39,6 @@ function register_tech_stack_custom_category()
 add_action('init', __NAMESPACE__ . '\register_tech_stack_custom_category', 0);
 
 /**
- * Register additional fields to tech stack taxonomy rest api response.
- * 
- * - Adds 'image_url' to response of 'meta' property
- *
- * @since 1.0.2
- */
-function register_taxonomy_tech_stack_meta()
-{
-    register_term_meta('tech_stack', 'image_url', array('type' => 'string', 'single' => true, 'show_in_rest' => true));
-}
-add_action('init', __NAMESPACE__ . '\register_taxonomy_tech_stack_meta');
-
-/**
- * Add tech stack taxonomy meta as separate entry in rest api response.
- * 
- * - Adds 'image_url' to response
- *
- * @since 1.0.2
- */
-function add_taxonomy_tech_stack_meta_in_rest($response, $item, $request)
-{
-    $image_url = get_term_meta($item->term_id, 'image_url', true);
-
-    $response->data['image_url'] = $image_url ?: '';
-    return $response;
-}
-
-add_filter('rest_prepare_tech_stack', __NAMESPACE__ . '\add_taxonomy_tech_stack_meta_in_rest', 10, 3);
-
-/**
  * Add additional fields when adding new tech stack.
  * 
  * - Adds 'image_url' field
@@ -84,9 +54,29 @@ function add_form_field_to_taxonomy_tech_stack()
         <label for="tag-image-url">
             <?php _e('Image Url', 'sg_works'); ?>
         </label>
-        <input name="image_url" id="image-url" type="url" value="" aria-describedby="image-url-description" />
-        <p class="image-url-description">
+        <input name="image_url" id="tag-image-url" type="url" value="" aria-describedby="image-url-description" />
+        <p id="image-url-description">
             <?php _e('Image to show with the text.', 'sg_works'); ?>
+        </p>
+    </div>
+    <div class="form-field term-is-filterable-wrap">
+        <label for="is_filterable" id="is_filterable-label">
+            <?php _e('Is Filterable', 'sg_works'); ?>
+        </label>
+        <fieldset>
+            <label>
+                <input value="true" type="radio" name="is_filterable" aria-labelledby="is_filterable-label"
+                    checked="checked" aria-describedby="is-filterable-description" /><!--
+                --><?php _e('Yes', 'sg_works'); ?>
+            </label>
+            <label>
+                <input value="false" type="radio" name="is_filterable" aria-labelledby="is_filterable-label"
+                    aria-describedby="is-filterable-description" /><!--
+                --><?php _e('No', 'sg_works'); ?>
+            </label>
+        </fieldset>
+        <p id="is-filterable-description">
+            <?php _e('Whether this tech stack can be used for filtering.', 'sg_works'); ?>
         </p>
     </div>
     <?php
@@ -103,6 +93,8 @@ add_action('tech_stack_add_form_fields', __NAMESPACE__ . '\add_form_field_to_tax
 function edit_form_field_to_taxonomy_tech_stack(\WP_Term $term)
 {
     $image_url = get_term_meta($term->term_id, 'image_url', true);
+    $is_filterable = get_term_meta($term->term_id, 'is_filterable', true);
+    $checked_attribute = "checked='checked'";
     // add a nonce for security
     wp_nonce_field('tech_stack_meta_edit', 'tech_stack_meta_edit_nonce');
     ?>
@@ -113,10 +105,35 @@ function edit_form_field_to_taxonomy_tech_stack(\WP_Term $term)
                 <?php _e('Image Url', 'sg_works'); ?>
             </label>
         </th>
-        <td><input name="image_url" id="image-url" type="url" value="<?php echo esc_attr($image_url); ?>"
+        <td>
+            <input name="image_url" id="image-url" type="url" value="<?php echo esc_attr($image_url); ?>"
                 aria-describedby="image-url-description" />
-            <p class="image-url-description">
+            <p id="image-url-description">
                 <?php _e('Image to show with the text.', 'sg_works'); ?>
+            </p>
+        </td>
+    </tr>
+    <tr class="form-field is-filterable-wrap">
+        <th scope="row">
+            <label for="is_filterable" id="is_filterable-label">
+                <?php _e('Is Filterable', 'sg_works'); ?>
+            </label>
+        </th>
+        <td>
+            <fieldset>
+                <label>
+                    <input value="true" type="radio" name="is_filterable" aria-labelledby="is_filterable-label" <?php echo $is_filterable === "true" ? $checked_attribute : ''; ?>
+                        aria-describedby="is-filterable-description" /><!--
+                    --><?php _e('Yes', 'sg_works'); ?>
+                </label>
+                <label>
+                    <input value="false" type="radio" name="is_filterable" <?php echo $is_filterable === "false" ? $checked_attribute : ''; ?> aria-labelledby="is_filterable-label"
+                        aria-describedby="is-filterable-description" /><!--
+                    --><?php _e('No', 'sg_works'); ?>
+                </label>
+            </fieldset>
+            <p id="is-filterable-description">
+                <?php _e('Whether this tech stack can be used for filtering.', 'sg_works'); ?>
             </p>
         </td>
     </tr>
@@ -133,11 +150,7 @@ add_action('tech_stack_edit_form_fields', __NAMESPACE__ . '\edit_form_field_to_t
  */
 function save_tech_stack_meta(int $term_id)
 {
-    if (!isset($_POST['image_url'])) {
-        return;
-    }
-
-    if (!isset($_POST['tech_stack_meta_new_nonce']) && !isset($_POST['tech_stack_meta_edit_nonce'])) {
+    if (!isset ($_POST['tech_stack_meta_new_nonce']) && !isset ($_POST['tech_stack_meta_edit_nonce'])) {
         return;
     }
 
@@ -145,8 +158,14 @@ function save_tech_stack_meta(int $term_id)
         return;
     }
 
-    $image_url_value = sanitize_text_field($_POST['image_url']);
-    update_term_meta($term_id, 'image_url', $image_url_value);
+    if (isset ($_POST['image_url'])) {
+        $image_url_value = sanitize_text_field($_POST['image_url']);
+        update_term_meta($term_id, 'image_url', $image_url_value);
+    }
+    if (isset ($_POST['image_url'])) {
+        $is_filterable_value = sanitize_text_field($_POST['is_filterable']);
+        update_term_meta($term_id, 'is_filterable', $is_filterable_value);
+    }
 }
 add_action('created_tech_stack', __NAMESPACE__ . '\save_tech_stack_meta', 10, 1);
 add_action('edited_tech_stack', __NAMESPACE__ . '\save_tech_stack_meta', 10, 1);
@@ -158,6 +177,7 @@ add_action('edited_tech_stack', __NAMESPACE__ . '\save_tech_stack_meta', 10, 1);
  */
 function add_column_for_taxonomy_tech_stack(array $columns): array
 {
+    $columns['is_filterable'] = __('Is Filterable', 'sg_works');
     $columns['image_url'] = __('Image Url', 'sg_works');
     return $columns;
 }
@@ -171,20 +191,51 @@ add_filter('manage_edit-tech_stack_columns', __NAMESPACE__ . '\add_column_for_ta
  */
 function add_content_for_taxonomy_tech_stack(string $content, string $column_name, int $term_id)
 {
-    // Skip if this is not our column
-    if ($column_name != 'image_url') {
-        return;
+    if ($column_name === 'image_url') {
+        $image_url = get_term_meta($term_id, 'image_url', true);
+        if ($image_url): ?>
+            <img src="<?php echo esc_attr($image_url); ?>" width="30" height="30" title="<?php echo esc_attr($image_url); ?>" />
+        <?php endif;
     }
-
-    $image_url = get_term_meta($term_id, 'image_url', true);
-
-    // Skip if term or field does not exist
-    if (!$image_url) {
-        return;
+    if ($column_name === 'is_filterable') {
+        $is_filterable = get_term_meta($term_id, 'is_filterable', true);
+        if ($is_filterable) {
+            echo $is_filterable === "true" ? "Yes" : "No";
+        }
     }
-    ?>
-    <img src="<?php echo esc_attr($image_url); ?>" width="30" height="30" title="<?php echo esc_attr($image_url); ?>" />
-    <?php
 }
 
 add_action('manage_tech_stack_custom_column', __NAMESPACE__ . '\add_content_for_taxonomy_tech_stack', 10, 3);
+
+/**
+ * Register additional fields to tech stack taxonomy rest api response.
+ * 
+ * - Adds 'image_url' to response of 'meta' property
+ *
+ * @since 1.0.2
+ */
+function register_taxonomy_tech_stack_meta()
+{
+    register_term_meta('tech_stack', 'image_url', array('type' => 'string', 'single' => true, 'show_in_rest' => true));
+    register_term_meta('tech_stack', 'is_filterable', array('type' => 'bool', 'single' => true, 'show_in_rest' => true));
+}
+add_action('init', __NAMESPACE__ . '\register_taxonomy_tech_stack_meta');
+
+/**
+ * Add tech stack taxonomy meta as separate entry in rest api response.
+ * 
+ * - Adds 'image_url' to response
+ *
+ * @since 1.0.2
+ */
+function add_taxonomy_tech_stack_meta_in_rest($response, $item, $request)
+{
+    $image_url = get_term_meta($item->term_id, 'image_url', true);
+    $is_filterable = get_term_meta($item->term_id, 'is_filterable', true);
+
+    $response->data['image_url'] = $image_url ?: '';
+    $response->data['is_filterable'] = $is_filterable === "true" ? true : false;
+    return $response;
+}
+
+add_filter('rest_prepare_tech_stack', __NAMESPACE__ . '\add_taxonomy_tech_stack_meta_in_rest', 10, 3);
