@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:   Works Custom Post Type
  * Description:   A CPT for showing projects and contributions made by developer
- * Version:       1.0.2
+ * Version:       1.0.3
  * Author:        Stephin Gasper
  * Author URI:    https://stephin-gasper.vercel.app/
  * Text Domain:   sg_works
