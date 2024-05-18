@@ -42,8 +42,9 @@ add_action('init', __NAMESPACE__ . '\register_tech_stack_custom_category', 0);
  * Add additional fields when adding new tech stack.
  * 
  * - Adds 'image_url' field
+ * - Adds 'is_filterable' field
  *
- * @since 1.0.2
+ * @since 1.0.3
  */
 function add_form_field_to_taxonomy_tech_stack()
 {
@@ -87,8 +88,9 @@ add_action('tech_stack_add_form_fields', __NAMESPACE__ . '\add_form_field_to_tax
  * Add additional fields when editing existing tech stack.
  * 
  * - Adds 'image_url' field
+ * - Adds 'is_filterable' field
  *
- * @since 1.0.2
+ * @since 1.0.3
  */
 function edit_form_field_to_taxonomy_tech_stack(\WP_Term $term)
 {
@@ -142,33 +144,63 @@ function edit_form_field_to_taxonomy_tech_stack(\WP_Term $term)
 add_action('tech_stack_edit_form_fields', __NAMESPACE__ . '\edit_form_field_to_taxonomy_tech_stack', 10, 1);
 
 /**
+ * Check nonce for meta fields send from form
+ * 
+ * @since 1.0.3
+ */
+function check_form_nonce(string $nonce_identifier)
+{
+    return isset($_POST["{$nonce_identifier}_nonce"]) && wp_verify_nonce($_POST["{$nonce_identifier}_nonce"], $nonce_identifier);
+}
+
+/**
  * Save meta values of tech stack when term is created/edited
  * 
  * - Save value for 'image_url' field
+ * - Save value for 'is_filterable' field
  *
- * @since 1.0.2
+ * @since 1.0.3
  */
 function save_tech_stack_meta(int $term_id)
 {
-    if (!isset ($_POST['tech_stack_meta_new_nonce']) && !isset ($_POST['tech_stack_meta_edit_nonce'])) {
-        return;
-    }
 
-    if (!wp_verify_nonce($_POST['tech_stack_meta_new_nonce'], 'tech_stack_meta_new') && !wp_verify_nonce($_POST['tech_stack_meta_edit_nonce'], 'tech_stack_meta_edit')) {
-        return;
-    }
-
-    if (isset ($_POST['image_url'])) {
+    if (isset($_POST['image_url'])) {
         $image_url_value = sanitize_text_field($_POST['image_url']);
         update_term_meta($term_id, 'image_url', $image_url_value);
     }
-    if (isset ($_POST['image_url'])) {
+
+    if (isset($_POST['is_filterable'])) {
         $is_filterable_value = sanitize_text_field($_POST['is_filterable']);
         update_term_meta($term_id, 'is_filterable', $is_filterable_value);
     }
 }
-add_action('created_tech_stack', __NAMESPACE__ . '\save_tech_stack_meta', 10, 1);
-add_action('edited_tech_stack', __NAMESPACE__ . '\save_tech_stack_meta', 10, 1);
+
+/**
+ * Save meta values of tech stack when term is created.
+ *
+ * @since 1.0.3
+ */
+function save_created_tech_stack_meta(int $term_id)
+{
+    if (check_form_nonce('tech_stack_meta_new')) {
+        save_tech_stack_meta($term_id);
+    }
+}
+
+/**
+ * Save meta values of tech stack when term is edited.
+ *
+ * @since 1.0.3
+ */
+function save_edited_tech_stack_meta(int $term_id)
+{
+    if (check_form_nonce('tech_stack_meta_edit')) {
+        save_tech_stack_meta($term_id);
+    }
+}
+
+add_action('created_tech_stack', __NAMESPACE__ . '\save_created_tech_stack_meta', 10, 1);
+add_action('edited_tech_stack', __NAMESPACE__ . '\save_edited_tech_stack_meta', 10, 1);
 
 /**
  * Add new column to taxonomy tech_stack
